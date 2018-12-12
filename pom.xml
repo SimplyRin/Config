@@ -4,7 +4,7 @@
 
   <groupId>net.simplyrin.config</groupId>
   <artifactId>Config</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.1</version>
   <packaging>jar</packaging>
 
   <name>Config</name>
@@ -13,6 +13,14 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
+  <distributionManagement>
+    <repository>
+      <id>net.simplyrin.config</id>
+      <name>Config</name>
+      <url>file://${project.build.directory}/mvn-repo</url>
+    </repository>
+  </distributionManagement>
 
   <build>
     <plugins>
@@ -42,7 +50,6 @@
       <type>jar</type>
       <scope>provided</scope>
     </dependency>
-
   </dependencies>
 
 </project>

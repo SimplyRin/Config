@@ -2,6 +2,8 @@ package net.simplyrin.config;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -43,7 +45,7 @@ public class Config {
 
 	public static Configuration getConfig(File file) {
 		try {
-			return ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
+			return getProvider().load(file);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -56,6 +58,20 @@ public class Config {
 
 	public static Configuration loadConfig(File file) {
 		return getConfig(file);
+	}
+
+	public static Configuration getConfig(URL url) {
+		try {
+			InputStream inputStream = url.openConnection().getInputStream();
+			return getProvider().load(inputStream);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private static ConfigurationProvider getProvider() {
+		return ConfigurationProvider.getProvider(YamlConfiguration.class);
 	}
 
 }

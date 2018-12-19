@@ -17,7 +17,7 @@ try {
 Configuration config = null;
 try {
 	config = Config.getConfig(new File("config.yml"));
-} catch (MalformedURLException e) {
+} catch (Exception e) {
 	e.printStackTrace();
 }
 ```

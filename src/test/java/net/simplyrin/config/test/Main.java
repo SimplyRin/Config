@@ -4,8 +4,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import net.md_5.bungee.config.Configuration;
 import net.simplyrin.config.Config;
+import net.simplyrin.config.Configuration;
 
 public class Main {
 
@@ -24,6 +24,25 @@ public class Main {
 		for (String value : l1) {
 			System.out.println(value);
 		}
+
+		// JSON
+		System.out.println("JSON:");
+		try {
+			config = Config.getConfig(new URL("https://gist.githubusercontent.com/SimplyRin/9839446f473e3b35552d5eee70f6c647/raw/c0dead33fa09598b56da7994871ca47b15b27b7d/Config.json"));
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+
+		String j1 = config.getString("String-1");
+		System.out.println("s1 -> " + j1);
+
+		List<String> jl1 = config.getStringList("List-1");
+		for (String value : jl1) {
+			System.out.println(value);
+		}
+
+		String child1 = config.getString("Json.ChildItem-1");
+		System.out.println("child1 -> " + child1);
 	}
 
 }

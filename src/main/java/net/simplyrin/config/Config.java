@@ -32,11 +32,7 @@ public class Config {
 
 	public static void saveConfig(Configuration config, File file) {
 		try {
-			if (file.getName().endsWith("json")) {
-				getProvider(ConfigType.JSON).save(config, file);
-			} else {
-				getProvider(ConfigType.YAML).save(config, file);
-			}
+			getProvider().save(config, file);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -48,12 +44,7 @@ public class Config {
 
 	public static Configuration getConfig(File file) {
 		try {
-			if (file.getName().endsWith("json")) {
-				return getProvider(ConfigType.JSON).load(file);
-			} else {
-				return getProvider(ConfigType.YAML).load(file);
-			}
-
+			return getProvider().load(file);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -69,14 +60,10 @@ public class Config {
 	}
 
 	public static Configuration getConfig(URL url) {
-		return getConfig(url, url.getPath().endsWith("json") ? ConfigType.JSON : ConfigType.YAML, DEFAULT_USER_AGENT);
+		return getConfig(url, DEFAULT_USER_AGENT);
 	}
 
-	public static Configuration getConfig(URL url, ConfigType type) {
-		return getConfig(url, type, DEFAULT_USER_AGENT);
-	}
-
-	public static Configuration getConfig(URL url, ConfigType type, String userAgent) {
+	public static Configuration getConfig(URL url, String userAgent) {
 		try {
 			HttpURLConnection connection;
 			if (url.getProtocol().equalsIgnoreCase("https")) {
@@ -87,19 +74,15 @@ public class Config {
 			connection.addRequestProperty("user-agent", userAgent);
 			connection.connect();
 
-			return getProvider(type).load(connection.getInputStream());
+			return getProvider().load(connection.getInputStream());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public static ConfigurationProvider getProvider(ConfigType type) {
-		if (type.equals(ConfigType.JSON)) {
-			return ConfigurationProvider.getProvider(JsonConfiguration.class);
-		} else {
-			return ConfigurationProvider.getProvider(YamlConfiguration.class);
-		}
+	public static ConfigurationProvider getProvider() {
+		return ConfigurationProvider.getProvider(YamlConfiguration.class);
 	}
 
 	public static void printOpenSourceLicense() {

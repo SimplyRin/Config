@@ -21,12 +21,6 @@ public abstract class ConfigurationProvider {
 		} catch (NoClassDefFoundError ex) {
 			// Ignore, no SnakeYAML
 		}
-
-		try {
-			providers.put(JsonConfiguration.class, new JsonConfiguration());
-		} catch (NoClassDefFoundError ex) {
-			// Ignore, no Gson
-		}
 	}
 
 	public static ConfigurationProvider getProvider(Class<? extends ConfigurationProvider> provider) {

@@ -44,7 +44,7 @@ try {
     <dependency>
       <groupId>net.simplyrin.config</groupId>
       <artifactId>Config</artifactId>
-      <version>1.2</version>
+      <version>1.4</version>
     </dependency>
   </dependencies>
 ```

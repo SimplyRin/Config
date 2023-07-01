@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.nodes.Node;
@@ -31,9 +32,11 @@ public class YamlConfiguration extends ConfigurationProvider {
 	private final ThreadLocal<Yaml> yaml = new ThreadLocal<Yaml>() {
 		@Override
 		protected Yaml initialValue() {
-			Representer representer = new Representer() {
-				{
-					this.representers.put(Configuration.class, new Represent() {
+			DumperOptions options = new DumperOptions();
+			options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+			
+			Representer representer = new Representer(options) { {
+					representers.put(Configuration.class, new Represent() {
 						@Override
 						public Node representData(Object data) {
 							return represent(((Configuration) data).self);
@@ -42,10 +45,7 @@ public class YamlConfiguration extends ConfigurationProvider {
 				}
 			};
 
-			DumperOptions options = new DumperOptions();
-			options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-
-			return new Yaml(new Constructor(), representer, options);
+			return new Yaml(new Constructor(new LoaderOptions()), representer, options);
 		}
 	};
 

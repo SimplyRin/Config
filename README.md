@@ -5,7 +5,7 @@ BungeeCord の Config API をちょっと使いやすくできるやつ
 - Yml, Yaml
 - Json
 
-# Usage
+# Yaml Usage
 - From URL
 ```Java
 Configuration config = null;
@@ -26,6 +26,14 @@ try {
 }
 ```
 
+# Json Usage
+- From File
+```Java
+Json json = Json.getJson(new File("config.json"));
+```
+
+Check out the [TestJson.java](./src/test/java/net/simplyrin/config/test/TestJson.java) sample.
+
 # Maven
 - Repository
 ```XML
@@ -44,7 +52,7 @@ try {
     <dependency>
       <groupId>net.simplyrin.config</groupId>
       <artifactId>Config</artifactId>
-      <version>1.5</version>
+      <version>2.0</version>
     </dependency>
   </dependencies>
 ```
